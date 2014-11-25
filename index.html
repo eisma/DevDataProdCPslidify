@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cables in Electrical Power Transmission</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Cables in Electrical Power Transmission">
+  <meta name="author" content="ME">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Cables in Electrical Power Transmission</h1>
+    <h2>Coursera Developing Data Products</h2>
+    <p>ME<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Outline</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li>Context</li>
+<li>Cable Parameters</li>
+<li>Charging Current</li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Context</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>The cables that are used in today&#39;s electric power systems consist of a concentric conductor (generally copper or aluminium), the dielectric isolating material (e.g. PVC) and a metallic shield which is grounded normally on both sides. Hence, a cables typically behaves like a capacitor.</li>
+<li>When operated with alternating current (which is the case except some particular point-to-point-connections), this capacity is charged and decharged with the system frequency.</li>
+<li>The power that can be transmitted over a cable is limited by the current, or more precisely: the current determines the losses inside the conductor which are transformed into heat. And it is mainly the isolating material which is irreversibly damaged in case of over-temperature.</li>
+<li>Hence, the current rating is defined by the material and it applies to both active and reactive current. While the active current is able to transmit power, the reactive current is necessary for the described charging process without being useful.</li>
+<li>The so-called charging current increases with the cables length. The maximum cable length is reached when the charging current equals the contiuous current carrying capacity and, thus, no active power can be transmitted any more.</li>
+<li>However, only half of this maximum cable length is considered as useful cable length.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Cable Parameters</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>The following technical cable data is given as an example</li>
+</ul>
+
+<pre><code class="r">f &lt;- 50      # system frequency in Hertz
+Um &lt;- 24     # highest voltage for equipment Um in kV
+X1 &lt;- 0.122  # positive sequence reactance in ohm per km
+C1 &lt;- 0.254  # positive sequence capacitance in microfarad per km
+Id &lt;- 366    # continuous current carrying capacity in Ampere
+</code></pre>
+
+<ul>
+<li>The following characteristic parameters for a lossless cable are calculated</li>
+</ul>
+
+<pre><code class="r">ZW1 &lt;- sqrt(X1/(2*pi*f*C1*1e-6))            # characteristic impedance in Ohms
+beta1 &lt;- sqrt(X1*2*pi*f*C1*1e-6)*180/pi*100 # propagation constant in degrees per 100km
+Pnat &lt;- Um^2/ZW1                            # natural loading in Megawatts 
+c(ZW1, beta1, Pnat)
+</code></pre>
+
+<pre><code>## [1] 39.10 17.88 14.73
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Charging Current</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Next, the charging current for an unloaded cable (no consumer connected at the end) is calculated for a given cable length. </li>
+</ul>
+
+<pre><code class="r">l &lt;- 100     # length in km
+Ic &lt;- 1/ZW1*tan(beta1/180*pi/100*l)*Um*1000/sqrt(3) # charging current in Ampere
+</code></pre>
+
+<ul>
+<li>The graph gives an idea what portion of the current carrying capacity of the cable is used for the charging current or if already only the charging current would exceed the maximum permissible current.</li>
+</ul>
+
+<p><img src="assets/fig/chart.png" alt="plot of chunk chart"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Outline'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Context'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Cable Parameters'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Charging Current'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
